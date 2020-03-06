@@ -1,0 +1,35 @@
+<h1>Usuarios</h1>
+<table class="table table-striped table-bordered table-hover">
+    <tbody>
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Email</th>
+            <th class="text-center">
+                <a [routerLink]="['/user/cadastrar']"
+                 class="btn btn-xs btn-success">
+                        <i class="fa fa-plus" aria-hidden="true"></i> Novo
+                </a>
+            </th>
+        </tr>
+    </tbody>
+        <tr *ngFor="let user of users">
+            <td>{{user.id}}</td>
+            <td>{{user.nome}}</td>
+            <td>{{user.email}}</td>
+            <td class="text-center" style="width: 250px;">
+                <a  title="Editar" alt="Editar" class="btn btn-xs btn-info">
+                        <i class="fa fa-edit" aria-hidden="true"></i> Editar
+                </a> 
+                <a style="margin-left: 1em" href="#"  
+                title="Remover" alt="Remover" class="btn btn-xs btn-danger">
+                        <i class="fa fa-trash" aria-hidden="true"></i> Remover
+                </a>
+            </td>
+        </tr>
+
+</table>
+
+<p *ngIf="!users">Nenhuma usuario cadastrado.</p>
+
+
