@@ -17,5 +17,15 @@ export class UserService {
     return this.http.get<User[]>(`${this.url}`);
   }
 
+  cadastrar(user:User){
+    return this.http.post(
+      `${this.url}`,
+      user,{
+        observe:'response',
+        responseType:'text'
+      }
+    )
+  }
+
 
 }
