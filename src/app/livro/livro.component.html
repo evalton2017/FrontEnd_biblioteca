@@ -1,26 +1,27 @@
 <h3>Livros</h3>
-
-<div class="row">
-    <div class="col-md 8">
-    <div class="form-group">
-        <label for="exampleInputEmail1">Pesquisa</label>
-        <input type="text" class="form-control" id="pesquisa" aria-describedby="pesquisa"
-            placeholder="Digite sua pesquisa" >
-    </div>
-    </div>
-    <div class="col-md 4" style="padding-top:3.4%;">
-        <button type="submit" class="btn btn-primary">Pesquisar</button>
-    </div>
-</div>    
-
+<form #formPesquisa="ngForm">
+    <div class="row">
+        <div class="col-md 8">
+        <div class="form-group">
+            <label for="exampleInputEmail1">Pesquisa</label>
+            <input type="text" class="form-control" id="pesquisa" name="pesquisa" [(ngModel)]="pesquisa" aria-describedby="pesquisa"
+                placeholder="Digite sua pesquisa" >
+        </div>
+        </div>
+        <div class="col-md 4" style="padding-top:3.4%;">
+            <button type="submit" class="btn btn-primary" (click)="pesquisar()">Pesquisar</button>
+        </div>
+    </div>    
+</form>
 <div class="row">
     <div class="col-md-4" *ngFor="let l of livros">
         <div class="card" style="width: 18rem;">
-            <img class="card-img-top" src="../../assets/img/livros.jpg" alt="Card image cap">
+            <img class="card-img-top" [src]="l.foto" alt="Card image cap" width="100px" height="330px">
             <div class="card-body">
               <h5 class="card-title">{{l.titulo}}</h5>
               <p class="card-text">descrição</p>
-              <a href="#" class="btn btn-primary btn-block">{{l.ano}}</a>
+              <a href="#" class="btn btn-warning btn-block">{{l.ano}}</a>
+              <a href="#" (click)="editar(l.id)" class="btn btn-primary btn-block">Editar</a>
             </div>
           </div>
     </div>

@@ -1,9 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Livro } from 'src/app/model/livro.model';
 import { LivroService } from 'src/app/service/livro.service';
-import { Router } from '@angular/router';
-import { renderFlagCheckIfStmt } from '@angular/compiler/src/render3/view/template';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 
 @Component({
   selector: 'app-cadastrar',
@@ -13,42 +12,37 @@ import { renderFlagCheckIfStmt } from '@angular/compiler/src/render3/view/templa
 export class CadastrarComponent implements OnInit {
 
   @ViewChild('formLivro', {static:true}) formLivro:NgForm;
-  livro:Livro;
-  formData = new FormData();
+  @Input()livro:Livro;
   public imagePath;
   imgURL:any='';
 
   constructor(
     private livroService:LivroService,
-    private router:Router
+    private router:Router,
+    private route:ActivatedRoute
   ) { }
 
   ngOnInit() {
     this.livro=new Livro();
-    console.log(this.livro)
+    this.route.params.subscribe((id:Params)=>{
+      if(id){
+        this.livroService.buscarPorId(id.id)
+            .subscribe(response=>{
+              console.log(response);
+            })
+      }     
+    })
   }
 
   cadastrar():void{
-    console.log(this.livro.foto);
-    console.log(this.formLivro);
-    this.livroService.cadastrar(this.livro)
+    this.livro.foto= document.getElementById("imagem").getAttribute("src");
+     this.livroService.cadastrar(this.livro)
       .subscribe(response=>{
-        
+        this.router.navigate(['livro'])
       },
         error=>{}
       )
 
-
-
-  }
-
-  inputFileChange(event){
-    if(event.target.files && event.target.files[0]){
-      const foto = event.target.files[0];
-    
-      this.formData.append('foto',foto);
-      console.log(this.formData);
-    }
   }
 
   visualizarImagem(event){

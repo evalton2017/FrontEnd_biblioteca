@@ -16,7 +16,7 @@ export const LivroRoutes:Routes = [
             {
                 path:'cadastro',
                 component:CadastrarComponent
-            },
+            }
         
         ]
         

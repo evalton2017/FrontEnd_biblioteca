@@ -31,7 +31,7 @@
     <div class="row">
       <div class="form-group col-md-4">
         <label for="inputState">Foto</label>
-        <img  id="imagem" [src]="imgURL" with="118px" height="140px" *ngIf="imgURL">
+        <img  id="imagem" [src]="imgURL || livro.foto" with="118px" height="140px" *ngIf="imgURL">
           <div class="custom-file">    
             <input type="file" accept='image/*' id="foto" name="foto" [(ngModel)]="livro.foto" 
               (change)="visualizarImagem($event)" required> 

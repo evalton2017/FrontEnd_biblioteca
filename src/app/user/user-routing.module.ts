@@ -21,7 +21,7 @@ export const UserRoutes:Routes = [
             {
                 path:'cadastrar',
                 component:CadastrarComponent
-            },
+            }
         ]
         
     },

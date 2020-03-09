@@ -27,4 +27,12 @@ export class LivroService {
     );
   }
 
+  pesquisar(pesquisa):Observable<Livro[]>{
+    return this.http.get<Livro[]>(`${this.url}/${pesquisa}`);
+  }
+
+  buscarPorId(id):Observable<Livro>{
+    return this.http.get<Livro>(`${this.url}/buscar/${id}`);
+  }
+
 }
