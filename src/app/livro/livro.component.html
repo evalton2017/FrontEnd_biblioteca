@@ -8,7 +8,7 @@
                 placeholder="Digite sua pesquisa" >
         </div>
         </div>
-        <div class="col-md 4" style="padding-top:3.4%;">
+        <div class="col-md 4" style="padding-top:32px;">
             <button type="submit" class="btn btn-primary" (click)="pesquisar()">Pesquisar</button>
         </div>
     </div>    
@@ -16,7 +16,7 @@
 <div class="row">
     <div class="col-md-4" *ngFor="let l of livros">
         <div class="card" style="width: 18rem;">
-            <img class="card-img-top" [src]="l.foto" alt="Card image cap" width="100px" height="330px">
+            <img class="card-img-top" [src]="l.foto || 'assets/img/livros.jpeg'" alt="Card image cap" width="25px" height="250px">
             <div class="card-body">
               <h5 class="card-title">{{l.titulo}}</h5>
               <p class="card-text">descrição</p>

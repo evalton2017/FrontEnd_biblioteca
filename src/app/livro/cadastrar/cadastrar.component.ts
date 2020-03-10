@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { Livro } from 'src/app/model/livro.model';
 import { LivroService } from 'src/app/service/livro.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
+import { empty } from 'rxjs';
 
 @Component({
   selector: 'app-cadastrar',
@@ -25,10 +26,13 @@ export class CadastrarComponent implements OnInit {
   ngOnInit() {
     this.livro=new Livro();
     this.route.params.subscribe((id:Params)=>{
-      if(id){
+      if(id.id!=undefined){
         this.livroService.buscarPorId(id.id)
             .subscribe(response=>{
-              console.log(response);
+              if(response){
+                this.livro=response;
+              }
+              
             })
       }     
     })
