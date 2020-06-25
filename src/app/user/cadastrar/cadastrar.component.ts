@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { NgForm, ReactiveFormsModule, FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { User } from 'src/app/model/user.model';
 import { UserService } from 'src/app/service/user.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
@@ -11,6 +11,8 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 })
 export class CadastrarComponent implements OnInit {
 
+  userForm: FormGroup;
+
   @ViewChild('formUser',{static:true}) formUser:NgForm
   user:User;
   users:User[];
@@ -18,11 +20,29 @@ export class CadastrarComponent implements OnInit {
   constructor(
     private userService:UserService,
     private route:ActivatedRoute,
-    private router:Router) { }
+    private router:Router,
+    private formBuilder: FormBuilder) { }
 
   ngOnInit() {
-    this.user = new User();
+  
+    this.userForm = this.formBuilder.group({
+      nome: [null],
+      email: [null],
+      perfil: [null],
+      senha: [null],
+      telefones: this.formBuilder.array([this.addTelefone()])
+
+    });
+
   }
+
+  addTelefone() :FormGroup{
+    return this.formBuilder.group({
+      numero: [''],
+      tipo: ['']
+    })
+  }
+
 
   listar(){
     this.userService.listar()
@@ -37,7 +57,9 @@ export class CadastrarComponent implements OnInit {
   }
 
   cadastrar(){
-    this.user.telefones.push(this.user.telefone)
+   // this.user.telefones.push(this.user.telefone)
+   console.log(this.userForm);
+   return false;
     this.userService.cadastrar(this.user)
     .subscribe(response=>{
       this.listar();
@@ -50,5 +72,6 @@ export class CadastrarComponent implements OnInit {
     )
 
   }
+
 
 }

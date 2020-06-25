@@ -1,26 +1,26 @@
 <div class="container">
     <h3>Cadastro de Usuario</h3>
-    <form #formUser="ngForm" novalidate>
+    <form [formGroup]="userForm" novalidate >
         <div class="form-row">
-        <div class="form-group col-md-6">
-            <label for="inputEmail4">Nome</label>
-            <input type="text" class="form-control" id="nome" name="titulo" [(ngModel)]="user.nome" placeholder="nome">
-        </div>
-        <div class="form-group col-md-6">
-            <label for="inputPassword4">Email</label>
-            <input type="text" class="form-control" id="email" name="email" [(ngModel)]="user.email"  placeholder="email">
-        </div>
+            <div class="form-group col-md-6">
+                <label for="inputEmail4">Nome</label>
+                <input type="text" class="form-control" id="nome" name="titulo" formControlName="nome" placeholder="nome">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="inputPassword4">Email</label>
+                <input type="text" class="form-control" id="email" name="email" formControlName="email"  placeholder="email">
+            </div>
         </div>
         <div class="form-row">
             <div class="form-group col-md-2">
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="perfil" id="perfil" [(ngModel)]="user.perfil" value="ROLE_ADMIN" checked>
+                    <input class="form-check-input" type="radio" name="perfil" id="perfil" formControlName="perfil" value="ROLE_ADMIN" checked>
                     <label class="form-check-label" for="admin">
                         Admin
                     </label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="perfil" id="perfil" [(ngModel)]="user.perfil" value="ROLE_USUARIO">
+                    <input class="form-check-input" type="radio" name="perfil" id="perfil" formControlName="perfil" value="ROLE_USUARIO">
                     <label class="form-check-label" for="perfil">
                         Usuario
                     </label>
@@ -29,17 +29,41 @@
             <div class="form-group col-md-4">
             <div class="form-group">
                 <label for="inputAddress2">Senha</label>
-                <input type="password" class="form-control" id="senha" name="senha" [(ngModel)]="user.senha" placeholder="Informe sua senha">
+                <input type="password" class="form-control" id="senha" name="senha" formControlName="senha" placeholder="Informe sua senha">
             </div>
-            </div>    
-        <div class="form-group col-md-4">
-            <label for="inputCity">Telefone</label>
-            <input type="text" class="form-control" id="telefone" name="telefone" [(ngModel)]="user.telefone" >
-        </div>
-        
+            </div> 
         </div>
 
-        <button type="submit" class="btn btn-primary" (click)="cadastrar()" [disabled]="!formUser.form.valid">SALVAR</button>
+        <h5>Contato</h5>
+        <div formArrayName="telefones">
+            <div formGroupName="0">
+
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <div class="form-group">
+                            <label for="inputAddress2">Telefone</label>
+                            <input type="text" class="form-control" id="numero" name="numero" formControlName="numero" placeholder="Informe o numero">
+                        </div>
+                    </div> 
+
+                    <div class="col-sm-2 col-xs-12">
+                        <div class="form-group">
+                        <label class="control-label" for="tipo"><em>*</em> Tipo:</label>
+                        <select name="tipo" class="form-control" id="tipo" formControlName="tipo">
+                            <option value="">Selecione...</option>
+                            <option value="COMERCIAL">Comercial</option>
+                            <option value="CELULAR">Celular</option>
+                        </select>        
+                        </div>
+                    </div>                    
+                </div>
+            </div>
+        </div>
+  
+        <button  class="btn btn-primary" (click)="addTelefone()">Adicionar Telefone</button> <br><br>
+      
+        
+        <button type="submit" class="btn btn-primary" (click)="cadastrar()" [disabled]="!userForm">SALVAR</button>
     </form>
 
 
