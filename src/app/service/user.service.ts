@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable} from '@angular/core';
 import { User } from '../model/user.model';
 import { API_CONFIG } from '../config/api.config';
 import { Observable } from 'rxjs';
@@ -20,6 +20,16 @@ export class UserService {
   cadastrar(user:User){
     return this.http.post(
       `${this.url}`,
+      user,{
+        observe:'response',
+        responseType:'text'
+      }
+    )
+  }
+  
+  atualizar(user:User){
+    return this.http.put(
+      `${this.url}/${user.id}`,
       user,{
         observe:'response',
         responseType:'text'

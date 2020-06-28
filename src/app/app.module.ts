@@ -6,7 +6,9 @@ import {FormsModule} from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { UserModule } from './user/user.module';
-import {LivroModule} from './livro/livro.module'
+import {LivroModule} from './livro/livro.module';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+
 
 @NgModule({
   declarations: [
@@ -18,7 +20,10 @@ import {LivroModule} from './livro/livro.module'
     HttpClientModule,
     UserModule,
     LivroModule,
-    AppRoutingModule
+    AppRoutingModule,
+    NgbModule
+
+
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -15,7 +15,7 @@ import { CadastrarComponent } from './cadastrar/cadastrar.component';
     UserComponent,
     ListarComponent,
     UserRoutingComponent,
-    CadastrarComponent,
+    CadastrarComponent
   
   ],
   providers:[
@@ -26,7 +26,8 @@ import { CadastrarComponent } from './cadastrar/cadastrar.component';
     RouterModule,
     UserRoutingModule,
     FormsModule, 
-    ReactiveFormsModule
+    ReactiveFormsModule,
+
   ]
 })
 export class UserModule { }
