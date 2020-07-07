@@ -2,7 +2,7 @@ import { User } from './user.model';
 
 export class Livro{
     public id:number;
-    public user:User[];
+    public user:User;
     public titulo:String;
     public autor:String;
     public ano:String;

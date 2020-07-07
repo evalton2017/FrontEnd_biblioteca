@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { NbTreeGridDataSource, NbSortDirection, NbTreeGridDataSourceBuilder, NbSortRequest } from '@nebular/theme';
 import { User } from '../model/user.model';
+import { Telefone } from '../model/telefone';
 
 interface TreeNode<Livro> {
   data: Livro;
@@ -30,9 +31,11 @@ interface FSEntry {
 export class LivroComponent implements OnInit {
   @ViewChild('formPesquisa', {static:true}) formLivro:NgForm;
 
-  livros: Livro[] = [];
+  lista: Livro[] = [];
   livro: Livro;
   pesquisa:String='';
+  livros: Livro[] = [];
+  livrosNodes: TreeNode<Livro>[]=[];
 
   customColumn = 'id';
   defaultColumns = [ 'ano', 'titulo', 'autor', ];
@@ -49,7 +52,6 @@ export class LivroComponent implements OnInit {
     private livroService:LivroService,
     private router:Router,
     private dataSourceBuilder: NbTreeGridDataSourceBuilder<FSEntry>) {
-    this.dataSource = this.dataSourceBuilder.create(this.data);
   }
 
   updateSort(sortRequest: NbSortRequest): void {
@@ -80,30 +82,28 @@ export class LivroComponent implements OnInit {
     return minWithForMultipleColumns + (nextColumnStep * index);
   }
 
-  private LivroToTreeNodes(livros: Livro[]) {
+private livroToTreeNodes(livros: Livro[]) {
     for (let livro of livros) {
-        this.livros.push(this.livroToTreeNode(livro));
+      this.livrosNodes.push(this.livroToTreeNode(livro));
     }
 }
 
-private livroToTreeNode(livro: Livro): TreeNode<FSEntry> {
-    let livrosTreeNodes: TreeNode<FSEntry>[] = [];
+private livroToTreeNode(livro: Livro): TreeNode<Livro> {
+    let userTreeNodes: TreeNode<any>[] = [];
 
-    if (livro.user !== undefined) {
-        for (let user of livro.user) {
-          livrosTreeNodes.push(this.UserToTreeNode(user));
+    if (livro.user.telefones !== undefined) {
+        for (let user of livro.user.telefones) {
+          userTreeNodes.push(this.UserToTreeNode(user));
         }
     }
     return {
-        label: livro.ano,
         data: livro,
-        children: livrosTreeNodes
+        children: userTreeNodes,
     };
 }
 
-private UserToTreeNode(user: User) : TreeNode<FSEntry> {
+private UserToTreeNode(user: Telefone) : TreeNode<any> {
     return {
-        label: user.nome,
         data: user
     }
 }
@@ -112,13 +112,16 @@ private UserToTreeNode(user: User) : TreeNode<FSEntry> {
 //TESTE NEBULAR
   ngOnInit() {
     this.listar();
+    console.log(this.livrosNodes);
+    console.log(this.data);
+    this.dataSource = this.dataSourceBuilder.create(this.livrosNodes);
   }
 
   listar(){
     this.livroService.listar()
       .subscribe(response=>{
-        this.livros=response;
-        console.log(this.livros);
+        this.lista=response;
+        this.livroToTreeNodes(response);
       },error=>{
         alert("Erro ao listar livros");
       });
@@ -127,7 +130,7 @@ private UserToTreeNode(user: User) : TreeNode<FSEntry> {
   pesquisar(){
     this.livroService.pesquisar(this.pesquisa)
       .subscribe(response=>{
-        this.livros=response;
+        this.lista=response;
       },error=>{
         alert("Erro ao realizar a pesquisa")
       })    
@@ -151,10 +154,10 @@ private UserToTreeNode(user: User) : TreeNode<FSEntry> {
   `,
 })
 export class FsIconComponent {
-  @Input() id: string;
+  @Input() autor: string;
   @Input() expanded: boolean;
 
   isDir(): boolean {
-    return this.id === 'dir';
+    return this.autor === 'Duke';
   }
 }
