@@ -4,6 +4,7 @@ import { LivroService } from '../service/livro.service';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { NbTreeGridDataSource, NbSortDirection, NbTreeGridDataSourceBuilder, NbSortRequest } from '@nebular/theme';
+import { User } from '../model/user.model';
 
 interface TreeNode<Livro> {
   data: Livro;
@@ -78,6 +79,36 @@ export class LivroComponent implements OnInit {
     const nextColumnStep = 100;
     return minWithForMultipleColumns + (nextColumnStep * index);
   }
+
+  private LivroToTreeNodes(livros: Livro[]) {
+    for (let livro of livros) {
+        this.livros.push(this.livroToTreeNode(livro));
+    }
+}
+
+private livroToTreeNode(livro: Livro): TreeNode<FSEntry> {
+    let livrosTreeNodes: TreeNode<FSEntry>[] = [];
+
+    if (livro.user !== undefined) {
+        for (let user of livro.user) {
+          livrosTreeNodes.push(this.UserToTreeNode(user));
+        }
+    }
+    return {
+        label: livro.ano,
+        data: livro,
+        children: livrosTreeNodes
+    };
+}
+
+private UserToTreeNode(user: User) : TreeNode<FSEntry> {
+    return {
+        label: user.nome,
+        data: user
+    }
+}
+
+
 //TESTE NEBULAR
   ngOnInit() {
     this.listar();
@@ -106,9 +137,9 @@ export class LivroComponent implements OnInit {
     event.preventDefault()
     this.router.navigate(['/livro/cadastro',{id:id}]);
   }
-
-
 }
+
+
 //TESTE NEBULAR
 @Component({
   selector: 'nb-fs-icon',

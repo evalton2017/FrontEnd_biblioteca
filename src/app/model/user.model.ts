@@ -7,10 +7,10 @@ export class User{
     public nome:String;
     public email:String;
     public perfil:Perfil;
-    public senha:String;
-    public ip:String;
-    public Livos: Livro [] = [];
-    public telefones: Telefone[] = [];
+    public senha?:String;
+    public ip?:String;
+    public Livros?: Livro [] = [];
+    public telefones?: Telefone[] = [];
 
 
 }

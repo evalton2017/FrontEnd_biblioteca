@@ -33,7 +33,6 @@ import { RouterModule } from '@angular/router';
     NbButtonModule,
     NbThemeModule.forRoot(),
 
-
   ],
   providers: [],
   bootstrap: [AppComponent]
