@@ -50,7 +50,6 @@ export class CadastrarComponent implements OnInit {
   }
 
   visualizarImagem(event){
-
     if (event.target.files && event.target.files[0]) {
       var reader = new FileReader();
       this.imagePath = event.target.files;

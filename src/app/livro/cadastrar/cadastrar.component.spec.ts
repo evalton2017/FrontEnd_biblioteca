@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CadastrarComponent } from './cadastrar.component';
 import { LivroService } from 'src/app/service/livro.service';
 import { HttpClient, HttpClientModule, HttpParams } from '@angular/common/http';
-import { ActivatedRoute,Params, Router } from '@angular/router';
+import { ActivatedRoute,Params, Router, RouterModule } from '@angular/router';
 import { AppRoutingModule } from 'src/app/app-routing.module';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
@@ -12,7 +12,11 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Livro } from 'src/app/model/livro.model';
 import { HttpClientTestingModule,
   HttpTestingController } from '@angular/common/http/testing';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { CommonModule } from '@angular/common';
+import { LivroRoutingModule } from '../livro-routing.module';
+import { NbThemeModule, NbLayoutModule, NbTreeGridModule, NbSidebarModule, NbCardModule, NbIconModule, NbButtonModule, NbSelectModule, NbAccordionModule } from '@nebular/theme';
+import { NbEvaIconsModule } from '@nebular/eva-icons';
 
 describe('CadastrarComponent', () => {
   let component: CadastrarComponent;
@@ -21,12 +25,9 @@ describe('CadastrarComponent', () => {
   let httpClient: HttpClient;
   let formLivro: NgForm;
   let livro: Livro;
-  let subscribe: Params;
   let httpTestingController: HttpTestingController;
-  
-  let mockSomeService = {
-    getData: () => {}
-  }
+  let livroServiceSub: LivroService; 
+  let router: Router;
 
   const fakeActivatedRoute = {
     snapshot: { data: {  } }
@@ -34,6 +35,7 @@ describe('CadastrarComponent', () => {
 
   
   beforeEach(async(() => {
+    
     TestBed.configureTestingModule({
       declarations: [
          CadastrarComponent
@@ -43,25 +45,40 @@ describe('CadastrarComponent', () => {
         HttpClientTestingModule,
         AppRoutingModule,
         RouterTestingModule.withRoutes([]),
-        FormsModule
+        FormsModule,
+        CommonModule,
+        RouterModule,
+        LivroRoutingModule,
+        FormsModule,
+        //Modulos Nebular
+        NbThemeModule.forRoot(),
+        NbLayoutModule,
+        NbTreeGridModule,
+        NbSidebarModule.forRoot(),
+        NbCardModule,
+        NbIconModule,
+        NbEvaIconsModule,    
+        NbButtonModule,
+        NbSelectModule,
+        NbAccordionModule,
        ],
-       schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
+      // schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
        providers: [
-         LivroService,
-         {
-          provide: ActivatedRoute,
-          useValue: fakeActivatedRoute, mockSomeService 
-         },
-         HttpClient,
-         FormBuilder,
-         NgbModal,
-         NgForm,
-         Livro,      
+        {provide: Router, useValue: {navigate: () => {}}},
+        {provide: ActivatedRoute, useValue: {
+            params: of({id: 123})
+          }},
+      
+        {provide: LivroService, useValue: {
+          buscarPorId: (id) => of({id: 123, titulo: 'Titulo', autor:'Fulano', ano:'2020'})
+         }},
+         {provide: NgForm, useValue:NgForm},  
+         {provide: Livro, useValue:Livro}
+        
                  
        ]
     })
     .compileComponents();
-
 
     //Mock Service
     httpTestingController = TestBed.get(HttpTestingController);
@@ -78,12 +95,21 @@ describe('CadastrarComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(CadastrarComponent);
     component = fixture.componentInstance;
+    livroService = TestBed.get(LivroService);
+    router = TestBed.get(Router);
+
     fixture.detectChanges();
-  });
+  }); 
 
- 
-
-  it('should create', () => {
+  it('Componente criado', () => {
     expect(component).toBeTruthy();
   });
+
+  it('Deve chamar ngOnInit', () => {
+    component.ngOnInit();
+    fixture.detectChanges();
+
+  });
+
+  
 });
