@@ -18,9 +18,13 @@ import {
   NbTreeGridRowDefDirective, 
   NbButtonModule, 
   NbSelectModule, 
-  NbAccordionModule
+  NbAccordionModule,
+  NbTable,
+  NbTableModule
 } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
+import { Ng2SmartTableModule } from 'ng2-smart-table';
+import { CompleterService } from '@akveo/ng2-completer';
 
 
 @NgModule({
@@ -33,15 +37,16 @@ import { NbEvaIconsModule } from '@nebular/eva-icons';
     NbTreeGridFooterRowDefDirective,
     NbTreeGridHeaderRowDefDirective,
     NbTreeGridRowDefDirective,
+    CompleterService
   ],
   imports: [
     CommonModule,
     RouterModule,
-    LivroRoutingModule,
     FormsModule,
     //Modulos Nebular
     NbThemeModule.forRoot(),
     NbLayoutModule,
+    NbTableModule,
     NbTreeGridModule,
     NbSidebarModule.forRoot(),
     NbCardModule,
@@ -49,7 +54,10 @@ import { NbEvaIconsModule } from '@nebular/eva-icons';
     NbEvaIconsModule,    
     NbButtonModule,
     NbSelectModule,
-    NbAccordionModule,     
+    NbAccordionModule, 
+    Ng2SmartTableModule,
+     
+    LivroRoutingModule,
   ],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA],
 })

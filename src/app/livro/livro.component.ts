@@ -3,25 +3,9 @@ import {Livro} from '../model/livro.model';
 import { LivroService } from '../service/livro.service';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
-import { NbTreeGridDataSource, NbSortDirection, NbTreeGridDataSourceBuilder, NbSortRequest } from '@nebular/theme';
-import { User } from '../model/user.model';
-import { Telefone } from '../model/telefone';
+import { NbSortDirection} from '@nebular/theme';
+import { LocalDataSource } from 'ng2-smart-table';
 
-interface TreeNode<Livro> {
-  data: Livro;
-  children?: TreeNode<Livro>[];
-  expanded?: boolean;
-}
-
-interface FSEntry {
-  id: number;
-  titulo: string;
-  autor: string;
-  ano?: string;
-  nome?: string;
-  perfil?: string;
-  email?: string;
-}
 
 @Component({
   selector: 'nb-tree-grid-showcase',
@@ -31,29 +15,73 @@ interface FSEntry {
 export class LivroComponent implements OnInit {
   @ViewChild('formPesquisa', {static:true}) formLivro:NgForm;
 
-  lista: Livro[] = [];
+  livros: Livro[] = [];
   livro: Livro;
   pesquisa:String='';
-  livros: Livro[] = [];
-  livrosNodes: TreeNode<Livro>[]=[];
 
-  customColumn = 'id';
-  defaultColumns = [ 'ano', 'titulo', 'autor', ];
-  allColumns = [ this.customColumn, ...this.defaultColumns ];
+  settings = {
+    columns: {
+      id: {
+        title: 'Codigo'
+      },
+      ano: {
+        title: 'Ano'
+      },
+      titulo: {
+        title: 'Titulo'
+      },
+      autor: {
+        title: 'Autor'
+      },
+      acoes: {
+        title: 'Ações',
+        filter:false
+      }
+    }
+  }
 
   //TESTE NEBULAR
 
-  dataSource: NbTreeGridDataSource<FSEntry>;
+  dataSource: LocalDataSource;
 
   sortColumn: string;
   sortDirection: NbSortDirection = NbSortDirection.NONE;
 
   constructor(
     private livroService:LivroService,
-    private router:Router,
-    private dataSourceBuilder: NbTreeGridDataSourceBuilder<FSEntry>) {
+    private router:Router) {
   }
 
+  
+  ngOnInit() {
+    this.listar();
+  }
+
+  listar(){
+    this.livroService.listar()
+      .subscribe(response=>{
+        this.livros=response;
+        this.dataSource = new LocalDataSource(this.livros);
+      },error=>{
+        alert("Erro ao listar livros");
+      });
+  }
+
+  pesquisar(){
+    this.livroService.pesquisar(this.pesquisa)
+      .subscribe(response=>{
+        this.livros=response;
+      },error=>{
+        alert("Erro ao realizar a pesquisa")
+      })    
+  }
+
+  editar(id){
+    event.preventDefault()
+    this.router.navigate(['/livro/cadastro',{id:id}]);
+  }
+
+/*
   updateSort(sortRequest: NbSortRequest): void {
     this.sortColumn = sortRequest.column;
     this.sortDirection = sortRequest.direction;
@@ -86,6 +114,7 @@ private livroToTreeNodes(livros: Livro[]) {
     for (let livro of livros) {
       this.livrosNodes.push(this.livroToTreeNode(livro));
     }
+    //this.dataSource = this.dataSourceBuilder.create(this.livrosNodes);
 }
 
 private livroToTreeNode(livro: Livro): TreeNode<Livro> {
@@ -106,58 +135,6 @@ private UserToTreeNode(user: Telefone) : TreeNode<any> {
     return {
         data: user
     }
-}
+}*/
 
-
-//TESTE NEBULAR
-  ngOnInit() {
-    this.listar();
-    console.log(this.livrosNodes);
-    console.log(this.data);
-    this.dataSource = this.dataSourceBuilder.create(this.livrosNodes);
-  }
-
-  listar(){
-    this.livroService.listar()
-      .subscribe(response=>{
-        this.lista=response;
-        this.livroToTreeNodes(response);
-      },error=>{
-        alert("Erro ao listar livros");
-      });
-  }
-
-  pesquisar(){
-    this.livroService.pesquisar(this.pesquisa)
-      .subscribe(response=>{
-        this.lista=response;
-      },error=>{
-        alert("Erro ao realizar a pesquisa")
-      })    
-  }
-
-  editar(id){
-    event.preventDefault()
-    this.router.navigate(['/livro/cadastro',{id:id}]);
-  }
-}
-
-
-//TESTE NEBULAR
-@Component({
-  selector: 'nb-fs-icon',
-  template: `
-  
-    <ng-template #fileIcon>
-     
-    </ng-template>
-  `,
-})
-export class FsIconComponent {
-  @Input() autor: string;
-  @Input() expanded: boolean;
-
-  isDir(): boolean {
-    return this.autor === 'Duke';
-  }
 }

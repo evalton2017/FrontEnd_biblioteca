@@ -61,16 +61,13 @@ export class ListarComponent implements OnInit {
       telefones: this.formBuilder.array([])
     });
     this.carregarTelefone(user);
-    console.log(user);
   }
 
   open(content) {
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
       alert("Usuario Altedo com sucesso!!")
-      console.log(result)
     }, (reason) => {
-      console.log(reason)
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
   }

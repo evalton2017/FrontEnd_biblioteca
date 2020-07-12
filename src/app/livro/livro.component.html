@@ -1,10 +1,10 @@
 <h3>Livros</h3>
-<!--
+
 <form #formPesquisa="ngForm">
     <div class="row">
         <div class="col-md 8">
         <div class="form-group">
-            <label for="exampleInputEmail1">Pesquisa</label>
+            <label for="exampleInputEmail1">Pesquise pelo Titulo ou Autor</label>
             <input type="text" class="form-control" id="pesquisa" name="pesquisa" [(ngModel)]="pesquisa" aria-describedby="pesquisa"
                 placeholder="Digite sua pesquisa" >
         </div>
@@ -20,46 +20,15 @@
             <img class="card-img-top" [src]="l.foto || 'assets/img/livros.jpeg'" alt="Card image cap" width="25px" height="250px">
             <div class="card-body">
               <h5 class="card-title">{{l.titulo}}</h5>
-              <p class="card-text">descrição</p>
+              <p class="card-text">{{l.autor}}</p>
               <a href="#" class="btn btn-warning btn-block">{{l.ano}}</a>
               <a href="#" (click)="editar(l.id)" class="btn btn-primary btn-block">Editar</a>
             </div>
           </div>
     </div>
-</div>-->
+</div>
 
-<!--TESTE NEBULAR-->
-<nb-card>
-    <nb-card-body>
-  
-      <label class="search-label" for="search">Search:</label>
-      <input nbInput [nbFilterInput]="dataSource" id="search" class="search-input">
-  
-      <table [nbTreeGrid]="dataSource" [nbSort]="dataSource" (sort)="updateSort($event)">
-  
-        <tr nbTreeGridHeaderRow *nbTreeGridHeaderRowDef="allColumns"></tr>
-        <tr nbTreeGridRow *nbTreeGridRowDef="let row; columns: allColumns"></tr>
-  
-        <ng-container [nbTreeGridColumnDef]="customColumn">
-          <th nbTreeGridHeaderCell [nbSortHeader]="getSortDirection(customColumn)" *nbTreeGridHeaderCellDef>
-            {{customColumn}}
-          </th>
-          <td nbTreeGridCell *nbTreeGridCellDef="let row">
-            <nb-fs-icon [autor]="row.data.autor" [expanded]="row.expanded"></nb-fs-icon>
-            {{row.data[customColumn]}}
-          </td>
-        </ng-container>
-  
-        <ng-container *ngFor="let column of defaultColumns; let index = index"
-                      [nbTreeGridColumnDef]="column"
-                      [showOn]="getShowOn(index)">
-          <th nbTreeGridHeaderCell [nbSortHeader]="getSortDirection(column)" *nbTreeGridHeaderCellDef>
-            {{column}}
-          </th>
-          <td nbTreeGridCell *nbTreeGridCellDef="let row">{{row.data[column] || '-'}}</td>
-        </ng-container>
-  
-      </table>
-  
-    </nb-card-body>
-  </nb-card>
+<!--
+<ng2-smart-table [settings]='settings'  [source]="dataSource">
+</ng2-smart-table>-->
+
