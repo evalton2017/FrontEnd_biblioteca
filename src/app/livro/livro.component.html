@@ -15,14 +15,15 @@
     </div>    
 </form>
 <div class="row">
-    <div class="col-md-4" *ngFor="let l of livros">
+    <div class="col-md-3" *ngFor="let l of livros">
         <div class="card" style="width: 18rem;">
-            <img class="card-img-top" [src]="l.foto || 'assets/img/livros.jpeg'" alt="Card image cap" width="25px" height="250px">
+            <img class="card-img-top" [src]="l.foto || 'assets/img/livros.jpeg'" alt="Card image cap" width="25px" height="200px">
             <div class="card-body">
               <h5 class="card-title">{{l.titulo}}</h5>
-              <p class="card-text">{{l.autor}}</p>
-              <a href="#" class="btn btn-warning btn-block">{{l.ano}}</a>
-              <a href="#" (click)="editar(l.id)" class="btn btn-primary btn-block">Editar</a>
+              <p class="card-text">Autor: {{l.autor}}</p>
+              <p class="card-text">Ano: {{l.ano}}</p>
+           <!--<a href="#" class="btn btn-warning btn-block">{{l.ano}}</a>
+              <a href="#" (click)="editar(l.id)" class="btn btn-primary btn-block">Editar</a> -->
             </div>
           </div>
     </div>

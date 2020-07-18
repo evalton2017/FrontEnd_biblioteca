@@ -12,11 +12,12 @@ import { NbThemeModule, NbTreeGridModule, NbLayoutModule, NbButtonModule, NbSide
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { RouterModule } from '@angular/router'; 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import {EditoraModule} from './editora/editora.module';
 
 @NgModule({
   declarations: [
     AppComponent,
+    
   ],
   imports: [
     BrowserModule,
@@ -24,6 +25,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     HttpClientModule,
     UserModule,
     LivroModule,
+    EditoraModule,
     NgbModule,
     //Modulo Nebular
     RouterModule, // RouterModule.forRoot(routes, { useHash: true }), if this is your app.module

@@ -9,16 +9,25 @@
       <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
-            <a class="nav-link" [routerLink]="['/']">Inicial <span class="sr-only">(current)</span></a>
+            <a class="nav-link" [routerLink]="['/livro']">Livros <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item active">
             <a class="nav-link" [routerLink]="['/user']">usuarios <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Ações</a>
+            <a class="nav-link dropdown-toggle" href="" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Administrativo</a>
             <div class="dropdown-menu" aria-labelledby="dropdown01">
-              <a class="dropdown-item" [routerLink]="['/livro']">Livros</a>
               <a class="dropdown-item" [routerLink]="['/livro/cadastro']">Cadastrar Livro</a>
+              <a class="dropdown-item" [routerLink]="['/']">Cadastrar Autor</a>
+              <a class="dropdown-item" [routerLink]="['/editora/cadastro']">Cadastrar Editora</a>
+              <a class="dropdown-item" [routerLink]="['/']">Vincular Livro a Editora</a>
+            </div>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Reserva</a>
+            <div class="dropdown-menu" aria-labelledby="dropdown01">
+              <a class="dropdown-item" [routerLink]="['/']">Reservar Livro</a>
+              <a class="dropdown-item" [routerLink]="['/']">Cancelar Reserva</a>
             </div>
           </li>
         </ul>
