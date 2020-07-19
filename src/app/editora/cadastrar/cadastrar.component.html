@@ -11,7 +11,7 @@
                 <th>Ações</th>
             </tr>
         </tbody>
-            <tr *ngFor="let editora of editoras">
+            <tr *ngFor="let editora of editoras  | paginate: { itemsPerPage: 5, currentPage: paginaAtual }; let i = index">
                 <td>{{editora.id}}</td>
                 <td>{{editora.nomeFantasia}}</td>
                 <td>{{editora.cnpj}}</td>
@@ -23,6 +23,7 @@
                 </td>
             </tr>
     </table>
+    <pagination-controls (pageChange)="paginaAtual = $event" previousLabel="Anterior" nextLabel="Próximo"></pagination-controls>
     <p *ngIf="!editoras">Nenhuma editora cadastrado.</p>
    
 <ng-template #mymodal let-modal>

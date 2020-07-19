@@ -16,6 +16,7 @@ export class CadastrarComponent implements OnInit {
   editora:Editora;
   editoras:Editora[];
   closeResult: string;
+  public paginaAtual = 1;
 
   constructor(
     private editoraService:EditoraService,

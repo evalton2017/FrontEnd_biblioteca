@@ -7,7 +7,6 @@ export class Livro{
     public autor:String;
     public ano:String;
     public categoria:String;
-    public editora:String;
     public foto:String;    
 
 }

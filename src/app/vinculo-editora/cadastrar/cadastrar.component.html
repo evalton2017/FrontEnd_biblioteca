@@ -1,0 +1,92 @@
+<div class="container">
+
+<nb-accordion>
+    <nb-accordion-item>
+        <nb-accordion-item-header><div class="info">Editoras</div>  
+               <div id="button">
+                   <i class="fa fa-plus btn btn-xs btn-primary" aria-hidden="true" (click)="open(mymodal)" ></i></div>
+        </nb-accordion-item-header>
+        <nb-accordion-item-body  *ngFor="let vinculo of vinculos; let i=index">
+            <nb-icon *ngIf="vinculo.posicao!=1" icon="arrow-ios-upward-outline" (click)="posicaoDow(vinculos[i],vinculos[i-1])"
+             status="success" id="icon_"></nb-icon><br>
+           <div class="info">{{vinculo.posicao}}</div> <div class="info">{{vinculo.editora.nomeFantasia}} </div> 
+                <div class="info" id="info_"><i class="fa fa-info  btn btn-xs btn-primary" aria-hidden="true" (click)="info(mymodalInfo,vinculo.livros)"></i></div>
+               <br><nb-icon *ngIf="vinculo.posicao != vinculos.length" icon="arrow-ios-downward-outline" (click)="posicaoDow(vinculos[i],vinculos[i+1])"
+                status="danger" id="icon_"></nb-icon>
+        </nb-accordion-item-body>
+    </nb-accordion-item>
+</nb-accordion>
+   
+<ng-template #mymodal let-modal>
+    <div class="modal-content">
+        <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <h6 id="titulo">Vincular Editora</h6>
+        </div>
+       
+        <div class="modal-body">   
+            <form [formGroup]="vinculoForm" novalidate >
+                <nb-card size="small">
+                    <nb-card-body>
+                        <label>Editora *</label>
+                        <div class="form-group">
+                            <select class="form-control" formControlName="editora" placeholder="Editora">
+                                <option value="">Selecione</option>
+                                <option *ngFor="let edit of editoras" [value]="edit.id" >{{edit.nomeFantasia}}</option>
+                            </select>
+                        </div>
+                        <hr>
+                        <h6>Livros</h6>
+                        <hr>
+                        <div class="row">
+                            <div class="col md-4">
+                                <nb-checkbox *ngFor="let livro of listaLivros; let i = index" 
+                                (click)="adicionaLivros(livro.id)" formControlName="livros"
+                                style="padding-right: 5px;">{{livro.titulo}}</nb-checkbox>
+                            </div>
+                        </div>
+                      
+                    </nb-card-body>            
+
+                </nb-card>
+                <br><br>        
+                <button type="submit" class="btn btn-primary" (click)="cadastrar(); modal.close('Save click')"  [disabled]="!vinculoForm.valid">SALVAR</button>
+            </form>
+        </div>
+    </div>
+</ng-template>
+
+
+  
+<ng-template #mymodalInfo let-modal>
+    <div class="modal-content">
+        <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <h6 id="titulo">Vincular Editora</h6>
+        </div>
+       
+        <div class="modal-body">   
+            <form >
+                
+                <label>Livros</label>
+                <nb-card size="small">
+                    <nb-card-body *ngFor="let l of livrosInfo">
+                  
+                    <nb-card-header>{{l.titulo}}</nb-card-header><br>
+                        <nb-card-body>Ano: {{l.ano}}</nb-card-body>
+                        <nb-card-body> Autor: {{l.autor}}</nb-card-body>
+                    </nb-card-body>            
+
+                </nb-card>
+                <br><br>        
+                
+            </form>
+        </div>
+    </div>
+</ng-template>
+
+

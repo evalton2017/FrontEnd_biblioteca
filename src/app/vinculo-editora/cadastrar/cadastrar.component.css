@@ -1,0 +1,21 @@
+
+#titulo{
+    position: absolute;
+    text-align: left;
+}
+#button{
+    margin-left: 85%;
+    float: right;
+}
+.info{
+    display: inline-block;
+    margin: 1em;
+}
+#info_{
+    float: right;
+    margin-right: 3%;
+}
+ 
+#icon_{
+ margin-left: 10px;
+}

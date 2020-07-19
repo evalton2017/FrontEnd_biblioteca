@@ -1,16 +1,16 @@
 import { Contato } from "./contato.model";
 
 export class Editora{
-    private id?:number;
-	private cnpj:string;
-	private nomeFantasia:string;
-	private cep:string;
-	private logradouro:string;
-	private complemento?:string;
-	private bairro:string;
-	private localidade:string;
-	private uf:string;
-	private numero:string;
+    public id?:number;
+	public cnpj:string;
+	public nomeFantasia:string;
+	public cep:string;
+	public logradouro:string;
+	public complemento?:string;
+	public bairro:string;
+	public localidade:string;
+	public uf:string;
+	public numero:string;
     public contatos?: Contato[] = [];
 
 

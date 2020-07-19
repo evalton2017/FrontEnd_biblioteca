@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { EditoraComponent } from './editora.component';
-import { CadastrarComponent } from './cadastrar/cadastrar.component';
 import { 
   NbThemeModule,
   NbLayoutModule,
@@ -16,27 +14,31 @@ import {
   NbSelectModule, 
   NbAccordionModule,
   NbTable,
-  NbTableModule
+  NbTableModule,
+  NbCheckboxModule,
+  NbListModule
 } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { CompleterService } from '@akveo/ng2-completer';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {EditoraRoutingModule} from './editora-routing.module';
-import { EditoraRoutingComponent } from './editora-routing.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
-import { SharedModule } from 'src/app/shared/shared.module';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { VinculoEditoraRoutingModule } from './vinculo-editora-routing.module';
+import { VinculoEditoraComponent } from './vinculo-editora.component';
+import { VinculoEditoraRoutingComponent } from './vinculo-editora-routing.component';
+import { CadastrarComponent } from './cadastrar/cadastrar.component';
+
 
 @NgModule({
-  declarations: 
-    [
-      EditoraComponent,
-      EditoraRoutingComponent,
-      CadastrarComponent,
-    ],
+  declarations: [
+    VinculoEditoraComponent,
+    VinculoEditoraRoutingComponent,
+    CadastrarComponent
+
+  ],
   imports: [
     CommonModule,
     RouterModule,
@@ -48,6 +50,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     //Modulos Nebular
     NbThemeModule.forRoot(),
     NbLayoutModule,
+    NbListModule,
     NbTableModule,
     NbTreeGridModule,
     NbSidebarModule.forRoot(),
@@ -56,12 +59,15 @@ import { NgxPaginationModule } from 'ngx-pagination';
     NbEvaIconsModule,    
     NbButtonModule,
     NbSelectModule,
-    NbAccordionModule, 
+    NbLayoutModule,
+    NbCheckboxModule,
+    NbAccordionModule,
+    NbCardModule, 
     Ng2SmartTableModule,
-    SharedModule,
     NgxPaginationModule,
-     
-    EditoraRoutingModule,
+      
+    VinculoEditoraRoutingModule,
+    
   ]
 })
-export class EditoraModule { }
+export class VinculoEditoraModule { }
