@@ -1,21 +1,29 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { LivroComponent } from './livro.component';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { AppRoutingModule } from '../app-routing.module';
 import { RouterTestingModule } from '@angular/router/testing';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { LivroService } from '../service/livro.service';
 import { ActivatedRoute, RouterModule, Router } from '@angular/router';
 import { FormBuilder, NgForm, FormsModule } from '@angular/forms';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { NbTreeGridModule, NbThemeModule, NbLayoutModule, NbSidebarModule, NbCardModule, NbIconModule, NbButtonModule, NbSelectModule, NbAccordionModule } from '@nebular/theme';
+import { NbTreeGridModule, NbThemeModule, NbLayoutModule, NbSidebarModule, NbCardModule,
+  NbIconModule, NbButtonModule, NbSelectModule, NbAccordionModule } from '@nebular/theme';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { CommonModule } from '@angular/common';
 import { LivroRoutingModule } from './livro-routing.module';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { of } from 'rxjs';
 import { Livro } from '../model/livro.model';
+
+const mockLivros = [{
+  id: 12,
+  user: {id: 1, nome: 'fulano'},
+  titulo: 'teste',
+  autor: 'teste',
+  ano: 'teste',
+  categoria: 'teste',
+  foto: 'teste',
+}];
 
 describe('LivroComponent', () => {
   let component: LivroComponent;
@@ -32,7 +40,7 @@ describe('LivroComponent', () => {
       declarations: [
          LivroComponent
        ],
-       imports:[
+       imports: [
         HttpClientModule,
         HttpClientTestingModule,
         AppRoutingModule,
@@ -42,14 +50,13 @@ describe('LivroComponent', () => {
         RouterModule,
         LivroRoutingModule,
         FormsModule,
-        //Modulos Nebular
         NbThemeModule.forRoot(),
         NbLayoutModule,
         NbTreeGridModule,
         NbSidebarModule.forRoot(),
         NbCardModule,
         NbIconModule,
-        NbEvaIconsModule,    
+        NbEvaIconsModule,
         NbButtonModule,
         NbSelectModule,
         NbAccordionModule,
@@ -60,26 +67,20 @@ describe('LivroComponent', () => {
         {provide: ActivatedRoute, useValue: {
             params: of({id: 123})
           }},
-      
-        {provide: LivroService, useValue: {
-          listar: () => of({id: 123, titulo: 'Titulo', autor:'Fulano', ano:'2020'})
-         }},
-         {provide: NgForm, useValue:NgForm},  
-         {provide: Livro, useValue:Livro}
-        
-                 
+         {provide: NgForm, useValue: NgForm},
+         {provide: Livro, useValue: Livro}
+
        ]
     })
     .compileComponents();
-    //Mock Service
-    httpClient = TestBed.get(HttpClient)
+    httpClient = TestBed.inject(HttpClient);
     livroService = TestBed.inject(LivroService);
-   
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(LivroComponent);
     component = fixture.componentInstance;
+    component.livros = mockLivros;
     fixture.detectChanges();
   });
 
@@ -87,14 +88,15 @@ describe('LivroComponent', () => {
     expect(component).toBeTruthy();
   });
 
- /* it('Deve listar livro', () => {
-    livroService = {
-      listar().subscribe(response=>{
-        this.lista=response;
-        this.livroToTreeNodes(response);
-      },error=>{
-        alert("Erro ao listar livros");
-      });
-    }
-  });*/
+  it('pesquisa', () => {
+    component.pesquisar();
+    expect(component.pesquisa).toBeDefined();
+  });
+
+  it('editar', () => {
+    component.editar(1);
+    expect(component.editar).toBeDefined();
+  });
+
+
 });

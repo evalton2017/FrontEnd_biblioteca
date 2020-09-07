@@ -13,18 +13,17 @@ export class CadastrarComponent implements OnInit {
 
   userForm: FormGroup;
 
-  @ViewChild('formUser',{static:true}) formUser:NgForm
-  user:User;
-  users:User[];
+  @ViewChild('formUser', {static: true}) formUser: NgForm;
+  user: User;
+  users: User[];
 
   constructor(
-    private userService:UserService,
-    private route:ActivatedRoute,
-    private router:Router,
+    private userService: UserService,
+    private route: ActivatedRoute,
+    private router: Router,
     private formBuilder: FormBuilder) { }
 
   ngOnInit() {
-  
     this.userForm = this.formBuilder.group({
       nome: [null, [Validators.required]],
       email: [null, [Validators.required]],
@@ -35,53 +34,51 @@ export class CadastrarComponent implements OnInit {
 
   }
 
-  get telefones():FormArray{
-    return this.userForm.get("telefones") as FormArray;
+  get telefones(): FormArray{
+    return this.userForm.get('telefones') as FormArray;
   }
 
   addTelefone(){
     this.telefones.push(this.createTelefones());
   }
 
-  removeTelefone(posicao:number){
-    this.userForm.controls.telefones.value.splice(posicao)
+  removeTelefone(posicao: number){
+    this.userForm.controls.telefones.value.splice(posicao);
     this.telefones.controls.splice(posicao);
   }
 
-  createTelefones() :FormGroup{
+  createTelefones(): FormGroup{
     return this.formBuilder.group({
       numero: ['', [Validators.required]],
       tipo: ['', [Validators.required]]
-    })
+    });
   }
 
 
   listar(){
     this.userService.listar()
-      .subscribe(response=>{
-        this.users=response;
+      .subscribe(response => {
+        this.users = response;
       },
-        error=>{
-          alert("erro ao consultar usuarios");
+        error => {
+          alert('erro ao consultar usuarios');
         }
-      
-      )
+      );
   }
 
   cadastrar(){
     this.user = this.userForm.value;
     this.userService.cadastrar(this.user)
-    .subscribe(response=>{
+    .subscribe(response => {
       this.listar();
-      this.user=new User();
-      this.router.navigate(['user'])
+      this.user = new User();
+      this.router.navigate(['user']);
     },
-      error=>{
-        let erro = JSON.parse(error.error);
+      error => {
+        const erro = JSON.parse(error.error);
         alert(erro.errors[0].message);
       }
-    )
-
+    );
   }
 
 }

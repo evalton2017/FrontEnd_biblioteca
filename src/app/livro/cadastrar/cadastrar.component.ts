@@ -12,54 +12,52 @@ import { empty } from 'rxjs';
 })
 export class CadastrarComponent implements OnInit {
 
-  @ViewChild('formLivro', {static:true}) formLivro:NgForm;
-  @Input()livro:Livro;
+  @ViewChild('formLivro', {static: true}) formLivro: NgForm;
+  @Input()livro: Livro;
   public imagePath;
-  imgURL:any='';
+  imgURL: any = '';
 
   constructor(
-    private livroService:LivroService,
-    private router:Router,
-    private route:ActivatedRoute
+    private livroService: LivroService,
+    private router: Router,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit() {
-    this.livro=new Livro();
-    this.route.params.subscribe((id:Params)=>{
-      if(id.id!=undefined){
+    this.livro = new Livro();
+    this.route.params.subscribe((id: Params) => {
+      if (id.id !== undefined){
         this.livroService.buscarPorId(id.id)
-            .subscribe(response=>{
-              if(response){
-                this.livro=response;
+            .subscribe(response => {
+              if (response){
+                this.livro = response;
               }
-              
-            })
-      }     
-    })
+            });
+      }
+    });
   }
-
-  cadastrar():void{
-    this.livro.foto= document.getElementById("imagem").getAttribute("src");
-     this.livroService.cadastrar(this.livro)
-      .subscribe(response=>{
-        this.router.navigate(['livro'])
+  
+  cadastrar(): void{
+    this.livro.foto = document.getElementById('imagem').getAttribute('src');
+    this.livroService.cadastrar(this.livro)
+      .subscribe(response => {
+        this.router.navigate(['livro']);
       },
-        error=>{}
-      )
-
+        error => {}
+      );
   }
 
   visualizarImagem(event){
+    console.log('--imagem')
+    console.log(event);
     if (event.target.files && event.target.files[0]) {
-      var reader = new FileReader();
+      const reader = new FileReader();
       this.imagePath = event.target.files;
-      reader.readAsDataURL(event.target.files[0]); 
-      reader.onload = (event) => { 
-        this.imgURL = reader.result; 
-        
-      }
-    }      
-
+      reader.readAsDataURL(event.target.files[0]);
+      // tslint:disable-next-line:no-shadowed-variable
+      reader.onload = (event) => { this.imgURL = reader.result;
+      };
+    }
   }
 
 }

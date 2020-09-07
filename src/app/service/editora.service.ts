@@ -8,29 +8,27 @@ import { Editora } from '../model/editora.model';
   providedIn: 'root'
 })
 export class EditoraService {
-  
   url = `${API_CONFIG.baseUrl}/editora`;
-  urlCep = `https://viacep.com.br/ws/`
+  urlCep = `https://viacep.com.br/ws/`;
+  constructor(private http: HttpClient) { }
 
-  constructor(private http:HttpClient) { }
-
-  listar():Observable<Editora[]>{
+  listar(): Observable<Editora[]>{
     return this.http.get<Editora[]>(`${this.url}`);
   }
 
-  cadastrar(editora:Editora){
+  cadastrar(editora: Editora){
     return this.http.post(
         `${this.url}/cadastrar`,
-        editora,{
-          observe:'response',
-          responseType:'text'
+        editora, {
+          observe: 'response',
+          responseType: 'text'
         }
     );
   }
 
-  buscaCep(cep:string){
+  buscaCep(cep: string){
     return this.http.get(
-     `${this.urlCep}/${cep}/json` 
+     `${this.urlCep}/${cep}/json`
     );
   }
 }

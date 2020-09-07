@@ -2,20 +2,16 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { EditoraComponent } from './editora.component';
 import { CadastrarComponent } from './cadastrar/cadastrar.component';
-import { 
+import {
   NbThemeModule,
   NbLayoutModule,
   NbTreeGridModule,
   NbSidebarModule,
   NbCardModule,
   NbIconModule,
-  NbTreeGridFooterRowDefDirective,
-  NbTreeGridHeaderRowDefDirective, 
-  NbTreeGridRowDefDirective, 
-  NbButtonModule, 
-  NbSelectModule, 
+  NbButtonModule,
+  NbSelectModule,
   NbAccordionModule,
-  NbTable,
   NbTableModule
 } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
@@ -31,7 +27,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
-  declarations: 
+  declarations:
     [
       EditoraComponent,
       EditoraRoutingComponent,
@@ -45,7 +41,6 @@ import { NgxPaginationModule } from 'ngx-pagination';
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
-    //Modulos Nebular
     NbThemeModule.forRoot(),
     NbLayoutModule,
     NbTableModule,
@@ -53,14 +48,13 @@ import { NgxPaginationModule } from 'ngx-pagination';
     NbSidebarModule.forRoot(),
     NbCardModule,
     NbIconModule,
-    NbEvaIconsModule,    
+    NbEvaIconsModule,
     NbButtonModule,
     NbSelectModule,
-    NbAccordionModule, 
+    NbAccordionModule,
     Ng2SmartTableModule,
     SharedModule,
     NgxPaginationModule,
-     
     EditoraRoutingModule,
   ]
 })

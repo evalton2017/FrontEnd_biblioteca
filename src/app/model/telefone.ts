@@ -1,7 +1,7 @@
 import { tipoTelefone } from './tipoTelefone';
 
 export class Telefone{
-    public id:number;
-    public numero:String;
-    public tipo:tipoTelefone;
+    public id: number;
+    public numero: string;
+    public tipo: tipoTelefone;
 }

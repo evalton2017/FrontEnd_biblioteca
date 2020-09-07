@@ -15,16 +15,16 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 export class ListarComponent implements OnInit {
 
   closeResult: string;
-  @ViewChild('modalEditar') public modalEditar:ElementRef;
+  @ViewChild('modalEditar') public modalEditar: ElementRef;
   userForm: FormGroup;
   user: User;
-  users:User[];
-  lista:boolean = false;
+  users: User[];
+  lista = false;
 
   constructor(
-    private userService:UserService,
-    private route:ActivatedRoute,
-    private router:Router,
+    private userService: UserService,
+    private route: ActivatedRoute,
+    private router: Router,
     private formBuilder: FormBuilder,
     private modalService: NgbModal) { }
 
@@ -41,38 +41,39 @@ export class ListarComponent implements OnInit {
 
   listar(){
     this.userService.listar()
-      .subscribe(response=>{
-        this.users=response;
-        if(this.users.length>0){
-          this.lista=true;
+      .subscribe(response => {
+        this.users = response;
+        console.log(response);
+        if (this.users.length > 0){
+          this.lista = true;
         }
       },
-      error=>{
-        alert("Erro ao listar os usuarios!!")
+      error => {
+        alert('Nenhum usuario encontrado!!');
       });
   }
 
   editar(user: User){
       this.userForm = this.formBuilder.group({
-      id:[user.id],
+      id: [user.id],
       nome: [user.nome, [Validators.required]],
       email: [user.email, [Validators.required]],
       perfil: [user.perfil],
       telefones: this.formBuilder.array([])
     });
-    this.carregarTelefone(user);
+      this.carregarTelefone(user);
   }
 
   open(content) {
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
-      alert("Usuario Altedo com sucesso!!")
+      alert('Usuario Altedo com sucesso!!');
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
   }
 
-  private getDismissReason(reason: any): string {
+  getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
       return 'by pressing ESC';
     } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
@@ -82,51 +83,51 @@ export class ListarComponent implements OnInit {
     }
   }
 
-  alterar(){    
+  alterar(){
     this.user = new User();
     this.user = this.userForm.value;
     this.userService.atualizar(this.user)
-    .subscribe(response=>{
+    .subscribe(response => {
     },
-      error=>{
+      error => {
         alert(error.error.message);
       }
-    )
+    );
 
   }
 
-  carregarTelefone(user:User){
-    user.telefones.forEach(t =>{
+  carregarTelefone(user: User){
+    user.telefones.forEach(t => {
         this.telefones.push(this.carregaTelefones(t));
-    })
+    });
   }
 
-  get telefones():FormArray{
-    return this.userForm.get("telefones") as FormArray;
+  get telefones(): FormArray{
+    return this.userForm.get('telefones') as FormArray;
   }
 
   addTelefone(){
     this.telefones.push(this.setTelefones());
   }
 
-  removeTelefone(posicao:number){
-    this.userForm.controls.telefones.value.splice(posicao)
+  removeTelefone(posicao: number){
+    this.userForm.controls.telefones.value.splice(posicao);
     this.telefones.controls.splice(posicao);
   }
 
-  carregaTelefones(telefone:Telefone) :FormGroup{
+  carregaTelefones(telefone: Telefone): FormGroup{
     return this.formBuilder.group({
       id: [telefone.id],
       numero: [telefone.numero, [Validators.required]],
       tipo: [telefone.tipo, [Validators.required]]
-    })
+    });
   }
 
-  setTelefones() :FormGroup{
+  setTelefones(): FormGroup{
     return this.formBuilder.group({
       numero: ['', [Validators.required]],
       tipo: ['', [Validators.required]]
-    })
+    });
   }
 
 }

@@ -1,5 +1,4 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { VinculoEditoraComponent } from './vinculo-editora.component';
 
 describe('VinculoEditoraComponent', () => {
@@ -23,3 +22,5 @@ describe('VinculoEditoraComponent', () => {
     expect(component).toBeTruthy();
   });
 });
+
+

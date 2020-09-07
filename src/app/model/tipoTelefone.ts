@@ -1,4 +1,4 @@
 export enum tipoTelefone{
-    COMERCIAL=0,
-    CELULAR=1
+    COMERCIA = 0,
+    CELULAR = 1
 }

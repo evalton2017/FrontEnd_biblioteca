@@ -11,30 +11,29 @@ export class UserService {
 
   url = `${API_CONFIG.baseUrl}/user`;
 
-  constructor(private http:HttpClient) { }
+  constructor(private http: HttpClient) { }
 
-  listar():Observable<User[]>{
+  listar(): Observable<User[]>{
     return this.http.get<User[]>(`${this.url}`);
   }
 
-  cadastrar(user:User){
+  cadastrar(user: User){
     return this.http.post(
       `${this.url}`,
-      user,{
-        observe:'response',
-        responseType:'text'
+      user, {
+        observe: 'response',
+        responseType: 'text'
       }
-    )
+    );
   }
-  
-  atualizar(user:User){
+  atualizar(user: User){
     return this.http.put(
       `${this.url}/${user.id}`,
-      user,{
-        observe:'response',
-        responseType:'text'
+      user, {
+        observe: 'response',
+        responseType: 'text'
       }
-    )
+    );
   }
 
 

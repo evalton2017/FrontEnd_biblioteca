@@ -6,7 +6,7 @@ import { LivroComponent } from './livro.component';
 import { LivroRoutingComponent } from './livro-routing.component';
 import { LivroRoutingModule } from './livro-routing.module';
 import { CadastrarComponent } from './cadastrar/cadastrar.component';
-import { 
+import {
   NbThemeModule,
   NbLayoutModule,
   NbTreeGridModule,
@@ -14,10 +14,10 @@ import {
   NbCardModule,
   NbIconModule,
   NbTreeGridFooterRowDefDirective,
-  NbTreeGridHeaderRowDefDirective, 
-  NbTreeGridRowDefDirective, 
-  NbButtonModule, 
-  NbSelectModule, 
+  NbTreeGridHeaderRowDefDirective,
+  NbTreeGridRowDefDirective,
+  NbButtonModule,
+  NbSelectModule,
   NbAccordionModule,
   NbTable,
   NbTableModule
@@ -33,7 +33,7 @@ import { CompleterService } from '@akveo/ng2-completer';
     LivroRoutingComponent,
     CadastrarComponent,
   ],
-  providers:[
+  providers: [
     NbTreeGridFooterRowDefDirective,
     NbTreeGridHeaderRowDefDirective,
     NbTreeGridRowDefDirective,
@@ -43,7 +43,6 @@ import { CompleterService } from '@akveo/ng2-completer';
     CommonModule,
     RouterModule,
     FormsModule,
-    //Modulos Nebular
     NbThemeModule.forRoot(),
     NbLayoutModule,
     NbTableModule,
@@ -51,12 +50,11 @@ import { CompleterService } from '@akveo/ng2-completer';
     NbSidebarModule.forRoot(),
     NbCardModule,
     NbIconModule,
-    NbEvaIconsModule,    
+    NbEvaIconsModule,
     NbButtonModule,
     NbSelectModule,
-    NbAccordionModule, 
+    NbAccordionModule,
     Ng2SmartTableModule,
-     
     LivroRoutingModule,
   ],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA],

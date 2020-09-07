@@ -4,33 +4,28 @@ import {EditoraRoutingComponent} from './editora-routing.component';
 import {EditoraComponent} from './editora.component';
 import {CadastrarComponent} from './cadastrar/cadastrar.component';
 
-export const EditoraRoutes:Routes = [
+export const EditoraRoutes: Routes = [
     {
-        path:'editora',
-        component:EditoraRoutingComponent,
+        path: 'editora',
+        component: EditoraRoutingComponent,
         children: [
             {
-                path:'',
-                component:EditoraComponent
+                path: '',
+                component: EditoraComponent
             },
             {
-                path:'cadastro',
-                component:CadastrarComponent
+                path: 'cadastro',
+                component: CadastrarComponent
             }
-        
         ]
-        
     },
-   
 ];
-
 @NgModule({
-    imports:[
+    imports: [
         RouterModule.forChild(EditoraRoutes)
     ],
     exports: [
         RouterModule
     ]
 })
-
 export class EditoraRoutingModule{}

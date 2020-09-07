@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {API_CONFIG} from '../config/api.config'
+import {API_CONFIG} from '../config/api.config';
 import { HttpClient } from '@angular/common/http';
 import { Livro } from '../model/livro.model';
 import { Observable } from 'rxjs';
@@ -11,27 +11,27 @@ export class LivroService {
 
   url = `${API_CONFIG.baseUrl}/livro`;
 
-  constructor(private http:HttpClient) { }
+  constructor(private http: HttpClient) { }
 
-  listar():Observable<Livro[]>{
+  listar(): Observable<Livro[]>{
     return this.http.get<Livro[]>(`${this.url}`);
   }
 
-  cadastrar(livro:Livro){
+  cadastrar(livro: Livro){
     return this.http.post(
         `${this.url}/cadastrar`,
-        livro,{
-          observe:'response',
-          responseType:'text'
+        livro, {
+          observe: 'response',
+          responseType: 'text'
         }
     );
   }
 
-  pesquisar(pesquisa):Observable<Livro[]>{
+  pesquisar(pesquisa): Observable<Livro[]>{
     return this.http.get<Livro[]>(`${this.url}/${pesquisa}`);
   }
 
-  buscarPorId(id):Observable<Livro>{
+  buscarPorId(id): Observable<Livro>{
     return this.http.get<Livro>(`${this.url}/buscar/${id}`);
   }
 

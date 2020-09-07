@@ -6,18 +6,19 @@ import { NgForm } from '@angular/forms';
 import { NbSortDirection} from '@nebular/theme';
 import { LocalDataSource } from 'ng2-smart-table';
 
-
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'nb-tree-grid-showcase',
   templateUrl: './livro.component.html',
   styleUrls: ['./livro.component.css']
 })
 export class LivroComponent implements OnInit {
-  @ViewChild('formPesquisa', {static:true}) formLivro:NgForm;
+  @ViewChild('formPesquisa', {static: true}) formLivro: NgForm;
 
   livros: Livro[] = [];
   livro: Livro;
-  pesquisa:String='';
+  // tslint:disable-next-line:ban-types
+  pesquisa: String = ``;
 
   settings = {
     columns: {
@@ -35,50 +36,45 @@ export class LivroComponent implements OnInit {
       },
       acoes: {
         title: 'Ações',
-        filter:false
+        filter: false
       }
     }
-  }
-
-  //TESTE NEBULAR
-
+  };
   dataSource: LocalDataSource;
-
   sortColumn: string;
   sortDirection: NbSortDirection = NbSortDirection.NONE;
 
   constructor(
-    private livroService:LivroService,
-    private router:Router) {
+    private livroService: LivroService,
+    private router: Router) {
   }
 
-  
   ngOnInit() {
     this.listar();
   }
 
   listar(){
     this.livroService.listar()
-      .subscribe(response=>{
-        this.livros=response;
+      .subscribe(response => {
+        this.livros = response;
         this.dataSource = new LocalDataSource(this.livros);
-      },error=>{
-        alert("Erro ao listar livros");
+      }, error => {
+        alert('Erro ao listar livros');
       });
   }
 
   pesquisar(){
     this.livroService.pesquisar(this.pesquisa)
-      .subscribe(response=>{
-        this.livros=response;
-      },error=>{
-        alert("Erro ao realizar a pesquisa")
-      })    
+      .subscribe(response => {
+        this.livros = response;
+      }, error => {
+        alert('Erro ao realizar a pesquisa');
+      });
   }
 
   editar(id){
-    event.preventDefault()
-    this.router.navigate(['/livro/cadastro',{id:id}]);
+    event.preventDefault();
+    this.router.navigate(['/livro/cadastro', {id}]);
   }
 
 /*

@@ -12,8 +12,8 @@ import { MascaraDirective } from './directives/mascara.directive';
   ],
   imports: [
     CommonModule
-  ], 
-  providers:[
+  ],
+  providers: [
    // PtBrMatPaginatorIntl
   ]
 })

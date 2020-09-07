@@ -1,17 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { 
+import {
   NbThemeModule,
   NbLayoutModule,
   NbTreeGridModule,
   NbSidebarModule,
   NbCardModule,
   NbIconModule,
-  NbTreeGridFooterRowDefDirective,
-  NbTreeGridHeaderRowDefDirective, 
-  NbTreeGridRowDefDirective, 
-  NbButtonModule, 
-  NbSelectModule, 
+  NbButtonModule,
+  NbSelectModule,
   NbAccordionModule,
   NbTable,
   NbTableModule,
@@ -31,13 +28,11 @@ import { VinculoEditoraComponent } from './vinculo-editora.component';
 import { VinculoEditoraRoutingComponent } from './vinculo-editora-routing.component';
 import { CadastrarComponent } from './cadastrar/cadastrar.component';
 
-
 @NgModule({
   declarations: [
     VinculoEditoraComponent,
     VinculoEditoraRoutingComponent,
     CadastrarComponent
-
   ],
   imports: [
     CommonModule,
@@ -47,7 +42,6 @@ import { CadastrarComponent } from './cadastrar/cadastrar.component';
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
-    //Modulos Nebular
     NbThemeModule.forRoot(),
     NbLayoutModule,
     NbListModule,
@@ -56,18 +50,16 @@ import { CadastrarComponent } from './cadastrar/cadastrar.component';
     NbSidebarModule.forRoot(),
     NbCardModule,
     NbIconModule,
-    NbEvaIconsModule,    
+    NbEvaIconsModule,
     NbButtonModule,
     NbSelectModule,
     NbLayoutModule,
     NbCheckboxModule,
     NbAccordionModule,
-    NbCardModule, 
+    NbCardModule,
     Ng2SmartTableModule,
     NgxPaginationModule,
-      
     VinculoEditoraRoutingModule,
-    
   ]
 })
 export class VinculoEditoraModule { }
