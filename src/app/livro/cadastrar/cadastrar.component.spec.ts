@@ -10,7 +10,7 @@ import { NbTreeGridModule, NbThemeModule,
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { CommonModule } from '@angular/common';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
-import { of, Observable } from 'rxjs';
+import { of as observableOf, throwError, observable } from 'rxjs';
 import { LivroService } from 'src/app/service/livro.service';
 import { AppRoutingModule } from 'src/app/app-routing.module';
 import { LivroRoutingModule } from '../livro-routing.module';
@@ -27,6 +27,26 @@ const mockLivros = [{
   categoria: 'teste',
   foto: 'teste',
 }];
+
+const respostaMockLivros =  {
+  status: 'OK',
+  messages: [],
+  data: {
+    response: [
+      {
+        id: 12,
+        user: { id: 1, nome: 'fulano'},
+        titulo: 'teste',
+        autor: 'teste',
+        ano: 'teste',
+        categoria: 'teste',
+        foto: 'teste',
+      }
+    ],
+    completa: false
+  },
+  statusCode: 200
+};
 
 const mockLivro = {
   id: 12,
@@ -81,7 +101,7 @@ describe('CadastrarComponent', () => {
        providers: [
         {provide: Router, useValue: {navigate: () => {}}},
         {provide: ActivatedRoute, useValue: {
-            params: of({id: 123})
+            params: observableOf({id: 123})
           }},
          {provide: NgForm, useValue: NgForm},
          {provide: Livro, useValue: Livro}  ,
@@ -103,18 +123,18 @@ describe('CadastrarComponent', () => {
   });
 
   it('visualiza Imagem', () => {
-    component.visualizarImagem('assets/img/livros.jpg');
+    const file = new File(['(⌐□_□)'], ' ', { type: 'image/png' });
+    const event = {target:{file:[file]}};
+    component.visualizarImagem(event);
     expect(component.visualizarImagem).toBeDefined();
   });
 
   it('cadastrar', () => {
    const livro = mockLivro;
    const response = mockLivro;
+   service = TestBed.inject(LivroService);
+   spyOn(service,'cadastrar').and.returnValue(observableOf(respostaMockLivros));
    component.cadastrar();
-   service.cadastrar(mockLivro).subscribe(response => {
-    expect(response).toBeTruthy();
-  });
-  const httpRequest = httpMock.expectOne(`${url}/cadastrar`);
    expect(component.cadastrar).toBeDefined(livro);
   });
   

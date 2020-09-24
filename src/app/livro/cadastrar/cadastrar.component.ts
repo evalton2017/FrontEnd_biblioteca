@@ -48,8 +48,6 @@ export class CadastrarComponent implements OnInit {
   }
 
   visualizarImagem(event){
-    console.log('--imagem')
-    console.log(event);
     if (event.target.files && event.target.files[0]) {
       const reader = new FileReader();
       this.imagePath = event.target.files;

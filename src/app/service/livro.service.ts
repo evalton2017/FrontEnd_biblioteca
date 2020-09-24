@@ -17,7 +17,7 @@ export class LivroService {
     return this.http.get<Livro[]>(`${this.url}`);
   }
 
-  cadastrar(livro: Livro){
+  cadastrar(livro: Livro): Observable<any>{
     return this.http.post(
         `${this.url}/cadastrar`,
         livro, {
