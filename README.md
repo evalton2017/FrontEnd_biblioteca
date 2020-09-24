@@ -1,6 +1,7 @@
 # Biblioteca
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.20.
+Projeto de cadastro de usuarios, livro e emprestimo de livros. 
+Projeto sendo desenvolvido seguindo padrão BDD
 
 ## Development server
 
