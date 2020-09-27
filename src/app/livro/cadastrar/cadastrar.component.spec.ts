@@ -60,7 +60,7 @@ const mockLivro = {
 
 const  url = `${API_CONFIG.baseUrl}/livro`;
 
-describe('CadastrarComponent', () => {
+describe('CadastrarComponent-Livro', () => {
   let component: CadastrarComponent;
   let fixture: ComponentFixture<CadastrarComponent>;
   let livroServiceSub: Partial<LivroService>;
@@ -101,7 +101,7 @@ describe('CadastrarComponent', () => {
        providers: [
         {provide: Router, useValue: {navigate: () => {}}},
         {provide: ActivatedRoute, useValue: {
-            params: observableOf({id: 123})
+            params: observableOf({id: 1})
           }},
          {provide: NgForm, useValue: NgForm},
          {provide: Livro, useValue: Livro}  ,
@@ -124,7 +124,7 @@ describe('CadastrarComponent', () => {
 
   it('visualiza Imagem', () => {
     const file = new File(['(⌐□_□)'], ' ', { type: 'image/png' });
-    const event = {target:{file:[file]}};
+    const event = {target:{files:[file]}};
     component.visualizarImagem(event);
     expect(component.visualizarImagem).toBeDefined();
   });
@@ -137,6 +137,15 @@ describe('CadastrarComponent', () => {
    component.cadastrar();
    expect(component.cadastrar).toBeDefined(livro);
   });
-  
+
+  it('cadastrar erro', () => {
+    const livro = mockLivro;
+    const response = mockLivro;
+    service = TestBed.inject(LivroService);
+    spyOn(service,'cadastrar').and.returnValue(throwError('error'));
+    component.cadastrar();
+    expect(component.cadastrar).toBeDefined(livro);
+   });
+    
  
 });

@@ -22,6 +22,26 @@ const mockLivros = [{
   foto: 'teste',
 }];
 
+const mockResposta: any = {
+  status: 'OK',
+  messages: [],
+  data: {
+    response: [
+      {
+        id: 12,
+        user: {id: 1, nome: 'fulano'},
+        titulo: 'teste',
+        autor: 'teste',
+        ano: 'teste',
+        categoria: 'teste',
+        foto: 'teste',
+      }
+    ],
+    completa: false
+  },
+  statusCode: 200
+};
+
 let listaLivros: Livro [] = [];
 
 const mockEditora = {
@@ -66,6 +86,7 @@ describe('CadastrarComponent', () => {
   const formBuilder: FormBuilder = new FormBuilder();
   let modalService: NgbModal;
   let mockModalRef: MockNgbModalRef = new MockNgbModalRef();
+  let service: VinculoEditoraService;
 
   const fakeActivatedRoute = {
     snapshot: { data: {  } }
@@ -132,6 +153,8 @@ describe('CadastrarComponent', () => {
   });
 
   it('listar', () => {
+    service = TestBed.inject(VinculoEditoraService);
+    spyOn(service, 'listar').and.returnValue(of(mockResposta));
     component.listar();   
     expect(component.listar).toBeDefined();
   });

@@ -12,7 +12,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { CommonModule } from '@angular/common';
 import { LivroRoutingModule } from './livro-routing.module';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { Livro } from '../model/livro.model';
 
 const mockLivros = [{
@@ -24,6 +24,26 @@ const mockLivros = [{
   categoria: 'teste',
   foto: 'teste',
 }];
+
+const mockResposta: any = {
+  status: 'OK',
+  messages: [],
+  data: {
+    response: [
+      {
+        id: 12,
+        user: {id: 1, nome: 'fulano'},
+        titulo: 'teste',
+        autor: 'teste',
+        ano: 'teste',
+        categoria: 'teste',
+        foto: 'teste',
+      }
+    ],
+    completa: false
+  },
+  statusCode: 200
+};
 
 describe('LivroComponent', () => {
   let component: LivroComponent;
@@ -89,6 +109,15 @@ describe('LivroComponent', () => {
   });
 
   it('pesquisa', () => {
+    livroService = TestBed.inject(LivroService);
+    spyOn(livroService, 'pesquisar').and.returnValue(of(mockResposta));
+    component.pesquisar();
+    expect(component.pesquisa).toBeDefined();
+  });
+
+  it('pesquisa error', () => {
+    livroService = TestBed.inject(LivroService);
+    spyOn(livroService, 'listar').and.returnValue(throwError('error'));
     component.pesquisar();
     expect(component.pesquisa).toBeDefined();
   });
@@ -96,6 +125,20 @@ describe('LivroComponent', () => {
   it('editar', () => {
     component.editar(1);
     expect(component.editar).toBeDefined();
+  });
+
+  it('listar', () => {
+    livroService = TestBed.inject(LivroService);
+    spyOn(livroService, 'listar').and.returnValue(of(mockResposta));
+    component.listar();   
+    expect(component.listar).toBeDefined();
+  });
+
+  it('listar erro', () => {
+    livroService = TestBed.inject(LivroService);
+    spyOn(livroService, 'listar').and.returnValue(throwError('error'));
+    component.listar();   
+    expect(component.listar).toBeDefined();
   });
   
 

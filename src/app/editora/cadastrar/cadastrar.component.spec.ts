@@ -9,7 +9,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import {AppRoutingModule} from '../../app-routing.module';
 import { Editora } from 'src/app/model/editora.model';
 import { EditoraService } from 'src/app/service/editora.service';
-import { Observable, of } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { NgbModal, NgbModalOptions, NgbModalRef, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 const mockEditoras = [{
@@ -39,19 +39,44 @@ const errors = {
 
 }
 
-const mockRespostaCep = {
-  cep: '71693-015',
-  logradouro: 'Quadra 14',
-  complemento: '',
-  bairro: 'Vila São José (São Sebastião)',
-  localidade: 'Brasília',
-  uf: 'DF',
-  ibge: '5300108',
-  gia: '',
-  ddd: '61',
-  siafi: '9701'
-}
+const mockResposta: any = {
+  status: 'OK',
+  messages: [],
+  data: {
+    response: [
+      {
+        id: 12,
+        cnpj: '03255566666',
+        nomeFantasia: 'Teste'
+      }
+    ],
+    completa: false
+  },
+  statusCode: 200
+};
 
+const mockRespostaCep: any = {
+  status: 'OK',
+  messages: [],
+  data: {
+    response: [
+      {
+        cep: '71693-015',
+        logradouro: 'Quadra 14',
+        complemento: '',
+        bairro: 'Vila São José (São Sebastião)',
+        localidade: 'Brasília',
+        uf: 'DF',
+        ibge: '5300108',
+        gia: '',
+        ddd: '61',
+        siafi: '9701'
+      }
+    ],
+    completa: false
+  },
+  statusCode: 200
+};
 
 export class MockNgbModalRef {
   componentInstance = {
@@ -66,26 +91,21 @@ const editoraForm = [];
 const closeResult = true;
 const  paginaAtual = 1;
 
-describe('CadastrarComponent', () => {
+describe('CadastrarComponent-Editora', () => {
   let component: CadastrarComponent;
   let fixture: ComponentFixture<CadastrarComponent>;
   // tslint:disable-next-line:prefer-const
   let httpClient: HttpClient;
   const formBuilder: FormBuilder = new FormBuilder();
-  let EditoraServiceSub: Partial<EditoraService>;
   let modalService: NgbModal;
   let mockModalRef: MockNgbModalRef = new MockNgbModalRef();
+  let service: EditoraService;
 
   const fakeActivatedRoute = {
     snapshot: { data: {  } }
   } as ActivatedRoute;
 
   beforeEach(async(() => {
-    EditoraServiceSub = {
-      listar(): Observable<Editora []> {
-        return of(mockEditoras);
-      }
-    },
     TestBed.configureTestingModule({
       declarations: [
          CadastrarComponent
@@ -156,24 +176,48 @@ describe('CadastrarComponent', () => {
   });
 
   it('buscaCep', () => {
-    const cep = '71693015';
+    component.editoraForm = formBuilder.group({
+      nomeFantasia: [null, [Validators.required]],
+      cnpj: [null, [Validators.required]],
+      cep: ['71693015', [Validators.required]],
+      logradouro: [null, [Validators.required]],
+      bairro: [null, [Validators.required]],
+      complemento: [null],
+      localidade: [null, [Validators.required]],
+      uf: [null, [Validators.required]],
+      numero: [null, [Validators.required]],
+      contatos: formBuilder.array([])
+    });
+    service = TestBed.inject(EditoraService);
+    spyOn(service, 'buscaCep').and.returnValue(of(mockRespostaCep));
     component.buscaCep();
-    EditoraServiceSub = {
-      buscaCep(cep): Observable<any> {
-        return of(mockRespostaCep);
-      }
-   };
-   component.editora = new Editora();
     expect(component.buscaCep).toBeDefined();
   });
 
   it('cadastrar', () => {
+    service = TestBed.inject(EditoraService);
+    spyOn(service, 'cadastrar').and.returnValue(of(mockResposta));
+    component.cadastrar();   
+    expect(component.cadastrar).toBeDefined();
+  });
+  
+  it('cadastrar error', () => {
+    const error = {error:{errors:[{message: 'erro'}]}};
+    console.log(error);
+    service = TestBed.inject(EditoraService);
+    spyOn(service, 'cadastrar').and.returnValue(throwError(error));
+   // spyOn(window, "alert");
     component.cadastrar();   
     expect(component.cadastrar).toBeDefined();
   });
 
   it('getDismissReason', () => {
-    component.getDismissReason('ModalDismissReasons.ESC');   
+    component.getDismissReason(1);   
+    expect(component.getDismissReason).toBeDefined();
+  });
+
+  it('getDismissReason ESC', () => {
+    component.getDismissReason(0);   
     expect(component.getDismissReason).toBeDefined();
   });
 
@@ -183,6 +227,20 @@ describe('CadastrarComponent', () => {
     tick();    
     expect(modalService.open).toHaveBeenCalledWith('',{ ariaLabelledBy: 'modal-basic-title' });
   }));
+
+  it('listar', () => {
+    service = TestBed.inject(EditoraService);
+    spyOn(service, 'listar').and.returnValue(of(mockResposta));
+    component.listar();   
+    expect(component.listar).toBeDefined();
+  });
+
+  it('listar erro', () => {
+    service = TestBed.inject(EditoraService);
+    spyOn(service, 'listar').and.returnValue(throwError('error'));
+    component.listar();   
+    expect(component.listar).toBeDefined();
+  });
 
 
 });

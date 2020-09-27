@@ -21,6 +21,7 @@ describe('VinculoEditoraComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+  
 });
 
 

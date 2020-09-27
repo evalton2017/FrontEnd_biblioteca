@@ -79,8 +79,8 @@ export class CadastrarComponent implements OnInit {
       this.editora = new Editora();
     },
       error => {
-        const erro = JSON.parse(error.error);
-        alert(erro.errors[0].message);
+       // const erro = JSON.parse(error.error);
+        alert(error.error.errors[0].message);
       }
     );
   }
